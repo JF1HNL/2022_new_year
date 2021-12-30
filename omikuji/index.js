@@ -1,11 +1,9 @@
 const LOCAL_KEY = 'kim_2022_new_year';
-const SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 '
+const SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890%'
 const KEY = 2022
 function main(){
   const getData = getUrlData() ? getUrlData() : getLocalData()
   const obj = getData ? getData : omikujiHiku()
-  console.log(obj)
-  console.log(makeURL(obj))
   display(obj)
   if(!document.location.search){
     const tweetButton = document.createElement("input")
@@ -137,8 +135,19 @@ function share(obj){
 
 function translated(text, encrypt_flag){
   return text.split("").map((it) => {
-    return SYMBOLS.indexOf(it) === -1 ? it : SYMBOLS[ SYMBOLS.indexOf(it) + ( encrypt_flag ? KEY : -1 * KEY) % SYMBOLS.length ]
+    return SYMBOLS.indexOf(it) === -1 ? it : (SYMBOLS.indexOf(it) + ( encrypt_flag ? KEY : -1 * KEY)) % SYMBOLS.length 
+  })
+  .map((it) => {
+    return it < 0 ? SYMBOLS[it + SYMBOLS.length] : SYMBOLS[it]
   }).join("")
+}
+
+function encrypt(text){
+  return translated(encodeURIComponent(text), true)
+}
+
+function decrypt(text){
+  return decodeURIComponent(translated(text, false))
 }
 
 main()

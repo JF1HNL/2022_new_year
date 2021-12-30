@@ -1,4 +1,6 @@
-const LOCAL_KEY = 'kim_2021_new_year';
+const LOCAL_KEY = 'kim_2022_new_year';
+const SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 '
+const KEY = 2022
 function main(){
   const getData = getUrlData() ? getUrlData() : getLocalData()
   const obj = getData ? getData : omikujiHiku()
@@ -106,7 +108,7 @@ function makeURL(obj){
 function tweet(obj) {
   const content = {
     url: makeURL(obj), // window.location.href,
-    text: `おみくじの結果は【${omikujiData.omikuji[obj.omikuji].ja}】でした！\n詳しくはこちら！`,
+    text: `おみくじの結果は【${omikujiData.omikuji[obj.omikuji].ja}】でした！\n詳しくはこちら！`,
     tag: "kimおみくじ2021"
   };
   for (let key in content) {
@@ -127,10 +129,16 @@ function display(obj){
 function share(obj){
   document.querySelector("#share").remove()
   const copy_dom = document.createElement("textarea")
-  copy_dom.value = `おみくじの結果は【${omikujiData.omikuji[obj.omikuji].ja}】でした！\n詳しくはこちら！\n${makeURL(obj)}`
+  copy_dom.value = `おみくじの結果は【${omikujiData.omikuji[obj.omikuji].ja}】でした！\n詳しくはこちら！\n${makeURL(obj)}`
   document.body.appendChild(copy_dom)
   copy_dom.select();
   document.execCommand("copy");
+}
+
+function translated(text, encrypt_flag){
+  return text.split("").map((it) => {
+    return SYMBOLS[ SYMBOLS.indexOf(it) + ( encrypt_flag ? KEY : -1 * KEY) % SYMBOLS.length ]
+  }).join("")
 }
 
 main()

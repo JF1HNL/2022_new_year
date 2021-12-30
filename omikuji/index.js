@@ -66,35 +66,18 @@ function getLocalData(){
 }
 
 function omikujiHiku(){
-  const nums = {
-    omikuji : Math.random(),
-    negai : Math.random(),
-    kinun : Math.random(),
-    lucky : Math.random()
+  const getRandomNumber = (n) => Math.round(Math.random() * n)
+  const tokudai = omikujiData.omikuji[0]
+  omikujiData.omikuji = omikujiData.omikuji.map((it) => [...Array(it.rate).keys()].map(() => it)).reduce((a,b) => [...a, ...b])
+  const nums = Object.keys(omikujiData)
+    .map((it) => { return {key : it, num : getRandomNumber(omikujiData[it].length)}})
+    .reduce((target, value) => { target[value.key] = value.num; return target }, {})
+  let return_obj = Object.keys(nums).map((it) => omikujiData[it][nums[it]])
+  if(return_obj.omikuji === tokudai){
+    return_obj = Object.keys(omikujiData).map((it) => omikujiData[it][0])
+    return_obj.omikuji = tokudai
+    return_obj.lucky = omikujiData.lucky[nums.lucky]
   }
-  const omikuji_key = [];
-  for(let i in omikujiData.omikuji){
-    for(let j = omikujiData.omikuji[i].rate * 100; j > 0; j--){
-      omikuji_key.push(i)
-    }
-  }
-  if(omikuji_key[Math.round(nums.omikuji * 100)] === "uakaQs"){
-    const obj = {
-      omikuji : "uakaQs",
-      negai : "GemVzx",
-      kinun : "hKejMy",
-      lucky : "eVrBYT"
-    }
-    localStorage.setItem(LOCAL_KEY, JSON.stringify(obj))
-    return obj
-  }
-  const return_obj = {};
-  return_obj.omikuji = omikuji_key[Math.round(nums.omikuji * 100)]
-  const keys = ["negai", "kinun", "lucky"]
-  keys.forEach(e => {
-    const keys = Object.keys(omikujiData[e])
-    return_obj[e] = keys[Math.floor(nums[e] * keys.length)]
-  });
   localStorage.setItem(LOCAL_KEY, JSON.stringify(return_obj))
   return return_obj
 }

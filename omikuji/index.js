@@ -112,7 +112,7 @@ function display(obj){
 function share(obj){
   document.querySelector("#share").remove()
   const copy_dom = document.createElement("textarea")
-  copy_dom.value = `おみくじの結果は【${omikujiData.omikuji[obj.omikuji].ja}】でした！\n詳しくはこちら！\n${makeURL(obj)}`
+  copy_dom.value = `おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！\n${makeURL(obj)}`
   document.body.appendChild(copy_dom)
   copy_dom.select();
   document.execCommand("copy");

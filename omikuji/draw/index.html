@@ -6,10 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>kimおみくじ2022</title>
   <link rel="stylesheet" href="../../index.css">
+  <link rel="stylesheet" href="../index.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <div id="title">2022年kimおみくじ</div>
-  <img src="omikuji.PNG" alt="おみくじの絵がここにある">
-  <input type="button" value="おみくじを引く">
+  <div>
+    <img src="omikuji.PNG" alt="おみくじの絵がここにある" class="omikuji-size" id="omikuji">
+  </div>
+  <input type="button" value="おみくじを引く" onclick="animation()">
+  <script src="index.js"></script>
 </body>
 </html>

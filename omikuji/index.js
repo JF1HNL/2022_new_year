@@ -137,7 +137,7 @@ function share(obj){
 
 function translated(text, encrypt_flag){
   return text.split("").map((it) => {
-    return SYMBOLS[ SYMBOLS.indexOf(it) + ( encrypt_flag ? KEY : -1 * KEY) % SYMBOLS.length ]
+    return SYMBOLS.indexOf(it) === -1 ? it : SYMBOLS[ SYMBOLS.indexOf(it) + ( encrypt_flag ? KEY : -1 * KEY) % SYMBOLS.length ]
   }).join("")
 }
 

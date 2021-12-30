@@ -1,3 +1,6 @@
+const LOCAL_KEY = 'kim_2022_new_year';
+const SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890%'
+const KEY = 2022
 const omikujiOnlyData = [
   {
     omikuji : "FKBFCDFHDFK%FG0FGBFK%FDEFCD",

@@ -1,6 +1,3 @@
-const LOCAL_KEY = 'kim_2022_new_year';
-const SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890%'
-const KEY = 2022
 function main(){
   const getData = getUrlData() ? getUrlData() : getLocalData()
   const obj = getData ? getData : omikujiHiku()
@@ -72,7 +69,6 @@ function omikujiHiku(){
   const nums = Object.keys(omikujiData)
     .map((it) => { return {key : it, num : getRandomNumber(omikujiData[it].length)}})
     .reduce((target, value) => { target[value.key] = value.num; return target }, {})
-  console.log(nums)
   let return_obj = Object.keys(nums)
     .map((it) => { return { key : it, value : omikujiData[it][nums[it]]}})
     .reduce((target, value) => {target[value.key] = value.value; return target}, {})

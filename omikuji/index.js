@@ -108,6 +108,7 @@ function display(obj){
     })
 }
 
+// ここを更新する
 function share(obj){
   document.querySelector("#share").remove()
   const copy_dom = document.createElement("textarea")
@@ -130,3 +131,6 @@ String.prototype.decrypt = function(){ return decodeURIComponent(translated(this
 String.prototype.encrypt = function(){ return translated(encodeURIComponent(this), true) }
 
 main()
+
+// 共有ボタンをアイコンにしたい
+// いろいろ日本語を追加したい

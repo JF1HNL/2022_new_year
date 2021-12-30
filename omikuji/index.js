@@ -34,11 +34,14 @@ function getUrlData(){
       .replaceAll('&', `","`)
       .replaceAll('=',`":"`)
     }"}`)
-    Object.keys(omikujiData).forEach(e => {
-      if(Object.keys(omikujiData[e]).indexOf(url_param[e]) === -1){
+    Object.keys(omikujiData).filter(it => it !== "omikuji").forEach(e => {
+      if(omikujiData[e].indexOf(url_param[e]) === -1){
         throw new Error('データがない');
       }
     });
+    if(omikujiOnlyData.map(it => it.omikuji).indexOf(url_param.omikuji) === -1){
+      throw new Error('データがない');
+    }
     return url_param
   }
   catch(e){

@@ -72,12 +72,13 @@ function omikujiHiku(){
   const nums = Object.keys(omikujiData)
     .map((it) => { return {key : it, num : getRandomNumber(omikujiData[it].length)}})
     .reduce((target, value) => { target[value.key] = value.num; return target }, {})
-  let return_obj = Object.keys(nums).map((it) => omikujiData[it][nums[it]])
+  let return_obj = Object.keys(nums).map((it) => { return { key : it, value : omikujiData[it][nums[it]]}}).reduce((target, value) => {target[value.key] = value.value; return target}, {})
   if(return_obj.omikuji === tokudai){
-    return_obj = Object.keys(omikujiData).map((it) => omikujiData[it][0])
+    return_obj = Object.keys(omikujiData).map((it) => { return {key : it, value : omikujiData[it][0]}}).reduce((target, value) => {target[value.key] = value.value; return target}, {})
     return_obj.omikuji = tokudai
     return_obj.lucky = omikujiData.lucky[nums.lucky]
   }
+  return_obj.omikuji = return_obj.omikuji.omikuji
   localStorage.setItem(LOCAL_KEY, JSON.stringify(return_obj))
   return return_obj
 }

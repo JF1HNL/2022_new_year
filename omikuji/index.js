@@ -87,14 +87,14 @@ function omikujiHiku(){
 }
 
 function makeURL(obj){
-  return `${window.location.href.split('?')[0]}?omikuji=${obj.omikuji}&negai=${obj.negai}&kinun=${obj.kinun}&lucky=${obj.lucky}`
+  return `${window.location.href.split('?')[0]}?omikuji=${obj.omikuji}&negai=${obj.negai}&kinun=${obj.kinun}&syobu=${obj.syobu}&lucky=${obj.lucky}`
 }
 
 function tweet(obj) {
   const content = {
     url: makeURL(obj), // window.location.href,
-    text: `おみくじの結果は【${omikujiData.omikuji[obj.omikuji].ja}】でした！\n詳しくはこちら！`,
-    tag: "kimおみくじ2021"
+    text: `おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！`,
+    tag: "kimおみくじ2022"
   };
   for (let key in content) {
     content[key] = encodeURIComponent(content[key]);

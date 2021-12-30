@@ -66,13 +66,16 @@ function getLocalData(){
 }
 
 function omikujiHiku(){
-  const getRandomNumber = (n) => Math.round(Math.random() * n)
-  const tokudai = omikujiData.omikuji[0]
-  omikujiData.omikuji = omikujiData.omikuji.map((it) => [...Array(it.rate).keys()].map(() => it)).reduce((a,b) => [...a, ...b])
+  const getRandomNumber = (n) => Math.floor(Math.random() * n)
+  const tokudai = omikujiOnlyData[0]
+  omikujiData.omikuji = omikujiOnlyData.map((it) => [...Array(it.rate).keys()].map(() => it)).reduce((a,b) => [...a, ...b])
   const nums = Object.keys(omikujiData)
     .map((it) => { return {key : it, num : getRandomNumber(omikujiData[it].length)}})
     .reduce((target, value) => { target[value.key] = value.num; return target }, {})
-  let return_obj = Object.keys(nums).map((it) => { return { key : it, value : omikujiData[it][nums[it]]}}).reduce((target, value) => {target[value.key] = value.value; return target}, {})
+  console.log(nums)
+  let return_obj = Object.keys(nums)
+    .map((it) => { return { key : it, value : omikujiData[it][nums[it]]}})
+    .reduce((target, value) => {target[value.key] = value.value; return target}, {})
   if(return_obj.omikuji === tokudai){
     return_obj = Object.keys(omikujiData).map((it) => { return {key : it, value : omikujiData[it][0]}}).reduce((target, value) => {target[value.key] = value.value; return target}, {})
     return_obj.omikuji = tokudai
@@ -100,12 +103,13 @@ function tweet(obj) {
 }
 
 function display(obj){
-  document.querySelector('#omikuji').textContent = omikujiData.omikuji[obj.omikuji].ja
-  document.querySelector('#text').textContent = omikujiData.omikuji[obj.omikuji].text
-  const keys = ["negai", "kinun", "lucky"]
-  keys.forEach(e => {
-    document.querySelector(`#${e}`).textContent = omikujiData[e][obj[e]]
-  })
+  document.querySelector('#omikuji').textContent = obj.omikuji.decrypt()
+  document.querySelector('#text').textContent = omikujiOnlyData.filter((it) => it.omikuji === obj.omikuji)[0].text.decrypt()
+  Object.keys(obj)
+    .filter((it) => it !== "omikuji")
+    .forEach(e => {
+      document.querySelector(`#${e}`).textContent = obj[e].decrypt()
+    })
 }
 
 function share(obj){
@@ -126,12 +130,7 @@ function translated(text, encrypt_flag){
   }).join("")
 }
 
-function encrypt(text){
-  return translated(encodeURIComponent(text), true)
-}
-
-function decrypt(text){
-  return decodeURIComponent(translated(text, false))
-}
+String.prototype.decrypt = function(){ return decodeURIComponent(translated(this, false)) }
+String.prototype.encrypt = function(){ return translated(encodeURIComponent(this), true) }
 
 main()

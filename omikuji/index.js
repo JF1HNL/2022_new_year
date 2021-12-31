@@ -14,11 +14,16 @@ function main(){
     shareButton.type = "button"
     shareButton.onclick = function(){share(obj)}
     document.body.appendChild(shareButton)
+    const sakunenButton = document.createElement("input")
+    sakunenButton.value = "2021年のおみくじを確認する"
+    sakunenButton.type = "button"
+    sakunenButton.onclick = function(){window.open("https://jf1hnl.github.io/2021_new_year/omikuji/")}
+    document.body.appendChild(sakunenButton)
   }else{
     const jibun = document.createElement("input")
     jibun.value = "自分のおみくじを引くor確認する"
     jibun.type = "button"
-    jibun.onclick = function(){window.location.href = window.location.href.split('?')[0]}
+    jibun.onclick = function(){window.location.href = "draw/"}
     document.body.appendChild(jibun)
   }
 }

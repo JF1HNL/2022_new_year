@@ -3,23 +3,46 @@ function main(){
   const obj = getData ? getData : omikujiHiku()
   display(obj)
   if(!document.location.search){
-    const tweetButton = document.createElement("input")
-    tweetButton.value = "結果をツイートして教えてね"
-    tweetButton.type = "button"
+    const kekkaDiv = document.createElement("div")
+    kekkaDiv.classList.add("kekka-message")
+    kekkaDiv.innerText = "結果を共有して教えてね！"
+    document.body.append(kekkaDiv)
+
+    const tweetDiv = document.createElement("div")
+    tweetDiv.classList.add("kekka-message")
+    tweetDiv.innerText = "結果をtweetする"
+    document.body.append(tweetDiv)
+
+    const tweetButton = document.createElement("i")
+    tweetButton.classList.add("fab")
+    tweetButton.classList.add("fa-twitter-square")
+    tweetButton.classList.add("fa-10x")
+    tweetButton.style = "color: #00acee; background-color: white;"
     tweetButton.onclick = function(){tweet(obj)}
     document.body.appendChild(tweetButton)
-    const shareButton = document.createElement("input")
-    shareButton.value = "結果をクリップボードにコピーする"
+
+    const shareDiv = document.createElement("div")
+    shareDiv.classList.add("kekka-message")
+    shareDiv.innerText = "結果をクリップボードにコピーする"
+    document.body.append(shareDiv)
+
+    const shareButton = document.createElement("i")
+    shareButton.classList.add("fas")
+    shareButton.classList.add("fa-clipboard")
+    shareButton.classList.add("fa-10x")
+    shareButton.style = "color: rgb(76, 76, 76);"
     shareButton.id = "share"
-    shareButton.type = "button"
     shareButton.onclick = function(){share(obj)}
     document.body.appendChild(shareButton)
+
+    const sakunenParent = document.createElement("div")
     const sakunenButton = document.createElement("input")
     sakunenButton.id = "sakunen"
     sakunenButton.value = "2021年のおみくじを確認する"
     sakunenButton.type = "button"
     sakunenButton.onclick = function(){window.open("https://jf1hnl.github.io/2021_new_year/omikuji/")}
-    document.body.appendChild(sakunenButton)
+    sakunenParent.appendChild(sakunenButton)
+    document.body.appendChild(sakunenParent)
   }else{
     const jibun = document.createElement("input")
     jibun.value = "自分のおみくじを引くor確認する"
@@ -118,16 +141,20 @@ function display(obj){
 }
 
 function share(obj){
-  document.querySelector("#share").remove()
+  document.querySelector("#share").classList.remove("fa-clipboard")
+  document.querySelector("#share").classList.add("fa-clipboard-check")
   const message = document.createElement("div")
-  message.style = "font-size: 6vmin;"
+  message.style = "font-size : 5vmin"
+  message.id = "share-result"
   if(navigator.clipboard){
     navigator.clipboard.writeText(`おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！\n${makeURL(obj)}`);
     message.innerText = "クリップボードにコピーしました"
   }else{
     message.innerText = "クリップボードにコピーできませんでした。"
   }
-  document.body.insertBefore(message, document.querySelector("#sakunen"))
+  if(document.querySelector("#share-result") === null){
+    document.body.insertBefore(message, document.querySelector("#sakunen"))
+  }
 }
 
 function translated(text, encrypt_flag){

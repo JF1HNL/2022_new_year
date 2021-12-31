@@ -121,7 +121,7 @@ function makeURL(obj){
 function tweet(obj) {
   const content = {
     url: makeURL(obj), // window.location.href,
-    text: `おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！`,
+    text: `おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！ @jf1hnl`,
     tag: "kimおみくじ2022"
   };
   for (let key in content) {

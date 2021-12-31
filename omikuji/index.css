@@ -23,3 +23,7 @@ input {
   margin: 2vmax;
   font-size: 4vmin;
 }
+.kekka-message {
+  font-size: 5vmin;
+  margin: 5vw 0 0 0;
+}

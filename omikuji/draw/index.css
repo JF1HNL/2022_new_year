@@ -7,6 +7,10 @@
   animation:10s linear infinite rotation;
 }
 
+#draw-button {
+  margin: 0 0 2vmax 0;
+}
+
 @keyframes rotation{
   0%{ transform:rotate(0);}
   5%{ transform:rotate(-30deg);}

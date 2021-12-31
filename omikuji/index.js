@@ -36,8 +36,8 @@ function main(){
     document.body.appendChild(shareButton)
 
     const sakunenParent = document.createElement("div")
+    sakunenParent.id = "sakunen"
     const sakunenButton = document.createElement("input")
-    sakunenButton.id = "sakunen"
     sakunenButton.value = "2021年のおみくじを確認する"
     sakunenButton.type = "button"
     sakunenButton.onclick = function(){window.open("https://jf1hnl.github.io/2021_new_year/omikuji/")}

@@ -15,6 +15,7 @@ function main(){
     shareButton.onclick = function(){share(obj)}
     document.body.appendChild(shareButton)
     const sakunenButton = document.createElement("input")
+    sakunenButton.id = "sakunen"
     sakunenButton.value = "2021年のおみくじを確認する"
     sakunenButton.type = "button"
     sakunenButton.onclick = function(){window.open("https://jf1hnl.github.io/2021_new_year/omikuji/")}
@@ -116,14 +117,17 @@ function display(obj){
     })
 }
 
-// ここを更新する
 function share(obj){
   document.querySelector("#share").remove()
-  const copy_dom = document.createElement("textarea")
-  copy_dom.value = `おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！\n${makeURL(obj)}`
-  document.body.appendChild(copy_dom)
-  copy_dom.select();
-  document.execCommand("copy");
+  const message = document.createElement("div")
+  message.style = "font-size: 6vmin;"
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(`おみくじの結果は【${obj.omikuji.decrypt()}】でした！\n詳しくはこちら！\n${makeURL(obj)}`);
+    message.innerText = "クリップボードにコピーしました"
+  }else{
+    message.innerText = "クリップボードにコピーできませんでした。"
+  }
+  document.body.insertBefore(message, document.querySelector("#sakunen"))
 }
 
 function translated(text, encrypt_flag){
@@ -139,6 +143,3 @@ String.prototype.decrypt = function(){ return decodeURIComponent(translated(this
 String.prototype.encrypt = function(){ return translated(encodeURIComponent(this), true) }
 
 main()
-
-// 共有ボタンをアイコンにしたい
-// いろいろ日本語を追加したい
